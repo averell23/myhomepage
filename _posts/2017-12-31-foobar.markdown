@@ -1,0 +1,14 @@
+---
+layout: post
+title:  "Welcome to Mine"
+date:   2017-12-30 22:33:19 +0100
+categories: jekyll update
+---
+This docs
+
+![My helpful screenshot]({{ "/assets/neko-7.jpg" | absolute_url }})
+
+actually work
+actually work actually work actually work actually work actually work
+actually work actually work actually work actually work actually work actually work
+actually work actually work actually work
