@@ -1,0 +1,29 @@
+---
+layout: post
+title: Sharp compared
+date: 2005-04-14 11:35:48.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Note to self
+- Tricks
+tags: []
+meta:
+  _publicize_pending: '1'
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>
+In C#, if you want a case-insensitive comparison of two strings, use String.Compare(), rather then applying ToLower() to the strings. Remember that the String class is immutable and "modification" methods actually create a new string and copy in memory. (Actually, I don't know how this works in Java).</p>
+<p>
+Bonus question to the audience: Does anyone know if the String.Length property can be accessed with O(1)?</p>

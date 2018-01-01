@@ -1,0 +1,43 @@
+---
+layout: post
+title: ebay (and your brain)
+date: 2009-01-13 14:02:02.000000000 +01:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Engineering
+tags: []
+meta:
+  _publicize_pending: '1'
+  _edit_last: '7360710'
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>I admit that I'm still reading strange stuff on the internet, like blogs. Some days ago I've come across the description of a <a href="http://www.codinghorror.com/blog/archives/001196.html">devilish auction system</a> to rip people off - the article is fun and I guess at least some of my evil readers will wonder why they didn't think of it first.</p>
+<p>But one statement caught my eye (unrelated to any evil plan):</p>
+<blockquote><p>I've often wondered if eBay would implement this [random feature], as it would effectively end last second sniping, a huge problem for auction sites.</p></blockquote>
+<p>This is utterly untrue. Sniping isn't a huge problem for eBay. It isn't even unfair in any meaningful way.</p>
+<p>But the really interesting fact is that, although eBay's system is dead easy, even reasonably intelligent people like Jeff Atwood only get it when thinking it through. I didn't do any research, but I guess that around 80% or 90% of the eBay users don't know how the auction system really works. And although they may be aware of "sniping", they don't know how it works (or doesn't work), either.</p>
+<p>I suppose this is because it's really hard to rewire our intuitive understanding of "auction".</p>
+<p><!--more--></p>
+<p>Even people who haven't been to an actual auction will know how it works: You call out bids, each one higher than the previous, and the last one wins. Say we're bidding for those old Chinese vase: I'll call out €20, Jeff raises to €25, I raise to €30. And so on, until Jeff gives up and I win. <em>The last bid wins</em>.</p>
+<p>Everyone knows this scheme, it became hardwired in our brains to the word "auction". And then eBay comes along and makes a slight (but crucial) change to the game: Instead of entering a straight bit, I put the maximum amount I want to spend.</p>
+<p>Let's take that vase again, with a minimum bid of €20. I enter my "bid" first, at €300 - but the price will now stand at $20. Jeff comes along and bids $250. Since that's less then my €300, eBay will increase my "bid" to €251. If Jeff raises to €1000, the system will raise his bid to €301 - just high enough to beat me. And so on, until the auction expires.</p>
+<p>In theory, each user should place exactly one bid with the maximum amount he wants to spend. The "bidding agent" figures it all out and the person who wants to spend the most wins. Sniping is not a problem.</p>
+<p>In reality, there are these psychological things happening: First off, many people aren't aware of how bids work. They won't read the instructions either - "I already know what an auction is, thank you very much". These people bid like they would in a traditional auction - if they see a bit for €20, they go to €22 and watch the page to see if someone goes higher. </p>
+<p>Other people will actually know the scheme and will bid their "maximum" amount. But when they see that they are loosing, they decide that maybe one could go up to €450 instead of €400. And in the heat of the auction, they go higher than they actually planned to.</p>
+<p>People don't act rationally on eBay. They interact with each other, based on how they think the system works. </p>
+<p>This is nice if you play eBay as a game. It's also nice for sellers, because the only possible interaction in this game is "raise the price". But the eBay psychology doesn't help the people who just want to buy things. That's why they use sniping.</p>
+<p>The only thing sniping does is to remove the interaction. If you bid ten seconds before the timeout, no one will be able to react any more. But it's not important that you enter the last bid - just that no one can react any more.</p>
+<p>Example: Joe bids €20 initiall, Jeff bids €300. If I snipe ten seconds before the end for $300, I'll get the thing for $22. If Zed also snipes, 5 seconds before the end, for $200, I still get the thing for $201. Jeff can't react (and decide that he'd go up to $500  - but if he had bid that initially, he would still win. And so on...</p>
+<p>Morale: If you design software, deal with people's preconceptions.</p>

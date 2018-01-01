@@ -1,0 +1,46 @@
+---
+layout: post
+title: Netbeans 6.0, Leopard and "fast debug"
+date: 2008-01-07 15:52:36.000000000 +01:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Engineering
+- Note to self
+- ruby
+- Tricks
+tags:
+- Debugging
+- fast debug
+- netbeans
+meta:
+  _publicize_pending: '1'
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>For the new year, I upgraded to a new machine which includes MacOS Leopard. The system looks o.k., a few nice features and not much changed really. However, there are also some annoyances:</p>
+<p><!--more--></p>
+<p>Leopard includes a Rails distribution, but to move up to 2.0 you should do</p>
+<pre>
+<code>
+gem update --system
+gem update
+</code>
+</pre>
+<p>to get the newest version of everything. Gem works out of the box, but uses a slightly unusual directory layout. Which means that Netbeans 6.0 will not enable the "Fast Debugger" (which is ruby-debug) - <strong>even</strong> if you installed ruby-debug-(ide|base|}-* and all the rest. The solution is a bit hidden on the NetBeans pages:</p>
+<p>Add the following to <code>/Applications/NetBeans/NetBeans 6.0.app/Contents/MacOS/netbeans</code></p>
+<pre><code>
+export GEM_PATH=/System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/gems/1.8:/Library/Ruby/Gems/1.8
+export GEM_HOME=/Library/Ruby/Gems/1.8
+</code></pre>
+<p>This will set the environment variables that NetBeans needs to find the Gems - after the next scan it will re-scan the gem directories, and you can start using the debugger...</p>

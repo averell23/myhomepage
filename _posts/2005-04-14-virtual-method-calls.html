@@ -1,0 +1,33 @@
+---
+layout: post
+title: Virtual method calls
+date: 2005-04-14 11:36:01.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Engineering
+- Tricks
+tags: []
+meta:
+  _publicize_pending: '1'
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>
+Since some say that <a href="http://osl.iu.edu/~tveldhui/papers/techniques/techniques01.html#l12">virtual method calls</a> are evil, I ran some tests to check how much overhead they create in C#.</p>
+<p>
+Unchecked result: They are about 5 times slower than nonvirtual calls. However, before you get overly excited: On my machine I could still make 5 Million virtual calls in 0.04 milliseconds.</p>
+<p>
+I guess in most cases the time spent in virtual calls will still be insignificant.</p>
+<p>
+<strong>Addendum, for those who shy away from indirections:</strong> There's no measurable penalty for nonvirtual calls (compared to inline code)</p>

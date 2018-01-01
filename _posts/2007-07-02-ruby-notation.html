@@ -1,0 +1,44 @@
+---
+layout: post
+title: Ruby notation
+date: 2007-07-02 10:56:16.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Architecture
+- Note to self
+- Philosophy
+tags:
+- notation
+- ruby
+- syntax
+meta:
+  _publicize_pending: '1'
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>Ok, we all knew that Ruby is very dynamic. The fun part starts if you start thinking about your own notation. It turns out, it's even more loose and fast than I thought. So consider this:</p>
+<blockquote><p>
+obj = Klass.new</p>
+<p>obj.do_something(params) # this calls the method with parameters<br />
+obj::do_something(params) # this is actually the same thing (calls do_something)</p>
+<p>obj.do_something:cool # and this call the method with the parameter :cool<br />
+obj::do_something:cool # ok, and now it's getting funny</p>
+<p>obj.Will_do # uppercase method names also work on objects</p>
+<p># so, for classes</p>
+<p>Klass.do_something # this will call the class method, of course<br />
+Klass::do_something # and this also calls the method<br />
+Klass.UpperCase # and this calls a class method with an upper case name<br />
+Klass::UpperCase # BUT THIS CALLS THE CONSTANT (go, figure...)</p>
+</blockquote>
+<p>The nice thing is that you can really start thinking of your own notation for things. Still, it's great weirdness notheless...</p>

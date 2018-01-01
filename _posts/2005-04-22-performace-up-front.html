@@ -1,0 +1,52 @@
+---
+layout: post
+title: Performace up front?
+date: 2005-04-22 18:27:15.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Architecture
+- Engineering
+- Philosophy
+tags: []
+meta:
+  _publicize_pending: '1'
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>
+In a new posting, Uli tells us that <a href="http://www.newgods.org/~uli/wordpress/?p=21#more-21">performance should be be built into software design.</a>. This appears to be a noble goal; but on the second look the problem is more complex than it seems.</p>
+<p><!--more--></p>
+<p>
+There is in fact a class of conceptual performance problems, which are directly related to the software design. The structure of an XML file, for example, <a href="http://www.joelonsoftware.com/articles/fog0000000296.html">makes it impossible to quickly select a specific data set</a>. So as long as you store your huge database in plain XML, you won't get quite happy. </p>
+<p>
+One would agree that this kind of problem should be addressed during design. But performance issues are not always that clear-cut and easily seen.</p>
+<p>
+They come in two flavours: Complexity issues and expensive operations. <a href="http://en.wikipedia.org/wiki/Computational_complexity_theory">Complexity</a> is what we learnt in computer science class: If, for example, you have to look at each element of a list in order to add a new one, you're in trouble. (Joel has a <a href="http://www.joelonsoftware.com/articles/fog0000000319.html">nice explanation</a> how these kind of problems can bring down your performance.<br />) These problems are usually inherent in the algorithms design (or in the design of the algorithms used by your algorithm), and this is the place where they should be addressed.</p>
+<p>
+The other kind of performance problems comes from inherently slow operations. Disk access will always be slow, compared to memory access. Memory access will always be slow, compared to registers. Copying strings in memory is slow, compared to passing pointers around. And so on - I assume you get the drift.</p>
+<p>
+The problem is that it's often hard to see which operations are expensive, and what their effect will be. In spite of this, every developer will have some ideas about which operations are expensive. Uli, for example, thinks that abstractions are expensive:</p>
+<blockquote><p>
+Object orientation introduces performance penalties that can prevent every compiler optimisation. So each abstraction introduces a significant overhead on you system. This may decrease the performance of your code by dimensions. To get rid of this problem later on, you may have to change your abstractions
+</p></blockquote>
+<p>
+But what to do about this? The obvious approach is to avoid abstractions; but, unfortunately, abstractions are your friends. They help you to make your code clean, modular and maintainable.</p>
+<p>
+If we want to avoid abstractions, it'd be better to only do so where it's absolutely necessary. But which are the hot spots that really matter?</p>
+<p>
+The problem with most software developers is that once they become sensitive of an issue ("abstractions are expensive"), they will see their code in terms of possible "optimisations". If carried on, this becomes a deeply ingrained habit: Each design decision will immediately be assessed on it's perceived performance. The result is that one starts messing up other aspects of the design. One of the best examples are developers who will write ridiculously long functions, out of the fear the function calls may be "expensive". More subtle is the notion that each level of indirection has to "justified" somehow, because of the perceived cost.</p>
+<p>
+This is at the core of the "do not optimise yet" mantra. It's not about ignorance, it's about putting the issue aside to avoid the mental trap. Later, when you have a running piece of software, you can measure the results, identify the problems and do something about them. This way you can make your decisions based on actual <em>knowledge</em>, rather than on the nagging feeling at the back of your head.</p>
+<p>
+And yes, this may mean you have to change your abstraction. This may be inconvenient, even difficult. But there's a good chance that the problems are different from what you thought, and the changes go into a different direction anyway. And with an agile process you should be able to spot the problems early on, and changes shouldn't doom you.</p>

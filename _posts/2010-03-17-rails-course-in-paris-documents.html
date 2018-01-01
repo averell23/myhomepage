@@ -1,0 +1,62 @@
+---
+layout: post
+title: Rails course in Paris - Documents
+date: 2010-03-17 20:25:11.000000000 +01:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Engineering
+tags: []
+meta:
+  _publicize_pending: '1'
+  _edit_last: '7360710'
+  image_value: "/wp-content/files/andrewr.jpg"
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>Here's some material for the Ruby on Rails course I gave at the <a href="http://www.univ-paris13.fr/">University in Paris</a> this week, on invitation of <a href="http://www-lipn.univ-paris13.fr/~fouquere/">Prof. Fouquere</a>. You can <a href="http://www.limitedcreativity.org/downloads/rails_paris.pdf">download the presentations</a> slides (also the <a href="http://www.limitedcreativity.org/downloads/second_day_paris.pdf">ones for the second day</a>) if you like. There's also a <a href="http://github.com/averell23/rails_course">git repository for the tutorial application</a> that I built, and <a href="http://github.com/averell23/simple_tutorial">another one for the simpler tutorial</a> application that the students created.</p>
+<p><!--more--></p>
+<h3>Quick Tutorial</h3>
+<p>To use Rails, you will have to have the <a href="http://www.ruby-lang.org/">Ruby programming</a> language installed. You can either use the native version for your environment or <a href="http://jruby.org/">JRuby</a>. <a href="http://wiki.rubyonrails.org/getting-started/installation/windows">For Windows</a> there's the <a href="http://rubyforge.org/frs/?group_id=167">one-click installer</a>; JRuby should run everywhere, follow the instruction installations on their homepage. You will also need the "gems" program which is included in most systems, but an optional download for some Linuses (There was a git repository for the course,<strong> I deleted it because it was too large</strong>)</p>
+<p>To follow through the tutorials, clone the git repositories and follow through. Each step is explained in the checkin message.</p>
+<p>Once you have got Ruby installed, you should be able to just call</p>
+<pre><code>
+gem install rails
+</code></pre>
+<p>to download and install <a href="http://rubyonrails.org/">Rails</a>. For further instructions follow the pointers on the Rails homepage.</p>
+<h3>Getting Started with your first rails App</h3>
+<p>To get started with your very first, very simple app you'll just need to do this (the commands in [brackets] may be needed for jruby users):</p>
+<pre><code>
+[jruby -S] rails my_first_app
+cd my_first_app
+[jruby] script/generate scaffold User name:string birthday:date
+[jruby -S] rake db:migrate
+[jruby] script/server
+</code></pre>
+<p>Your application will now be available at http://localhost:3000/users<br />
+(If you use JRuby, you may also need to install a Java database and configure the database through database.yml)</p>
+<h3>Pointers to what happened:</h3>
+<ul>
+<li><a href="http://wiki.rubyonrails.org/rails/pages/availablegenerators">generators</a> are used by Rails to create the templaes and files that are the starting point of your application</li>
+<li><a href="http://rake.rubyforge.org/">rake</a> is a "make"-like program that you can use to run maintenance tasks from the command line</li>
+<li><strong>scripts</strong> are some Ruby programs/scripts that come with Ruby</li>
+<li><a href="http://dizzy.co.uk/ruby_on_rails/cheatsheets/rails-migrations">migrations</a> are define the schema of the "database". Migrating will create your database tables and fields</li>
+</ul>
+<h3>On the Ruby language</h3>
+<p>You can have a look at the introductory book (<a href="http://ruby-doc.org/docs/ProgrammingRuby/">available online</a>), or have a look at why's more anarchistic<a href="http://mislav.uniqpath.com/poignant-guide/"> "poignant" guide</a>. There's also a number of books available in print form</p>
+<h3>On Rails</h3>
+<p>Many resoures on Rails can be found through <a href="http://rubyonrails.org/">the home page</a>, and there are tutorials and video instructions available on the web. It also pays to follow the <a href="http://ryandaigle.com/">Rails Edge blog</a> and the <a href="http://railscasts.com/">Railscast</a> if you want to stay up to date on new techniques. Mailing lists exist in almost any country or language, and are a good point to ask questions.</p>
+<p>A good introduction is the book "<a href="http://www.pragprog.com/titles/rails3/agile-web-development-with-rails-third-edition">Agile Web Development with Rails</a>", and there are also others.</p>
+<h3>Other</h3>
+<p>If you've got any more questions you may also leave a comment her.</p>
+<div>Article Image: <a rel="cc:attributionURL" href="http://www.flickr.com/photos/waldenpond/">http://www.flickr.com/photos/waldenpond/</a> / <a rel="license" href="http://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a></div>

@@ -1,0 +1,59 @@
+---
+layout: post
+title: Runtime Assertions in Ruby
+date: 2008-01-20 13:38:54.000000000 +01:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Debugging
+- Engineering
+- ruby
+tags:
+- assertions
+- assit
+meta:
+  _publicize_pending: '1'
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>I've published my first gem on rubyforge: <a href="http://assit.rubyforge.org/">assit</a>. It does runtime assertions for Ruby.</p>
+<p>When I got started with Ruby, I was flabbergasted that there weren't any runtime assertions at all. I have no idea why - even though there are one gadzillion different unit testing whatnots, a decent debugger and even a profiler. But this basic debugging tool, that has been there since the dawning days of C, is flatly missing; although it'd be even more useful in a language that doesn't do any static checking. </p>
+<p>So I've written my own little thing, and put it on for everyone to use. Getting started is easy: Just do </p>
+<pre>
+<code>
+sudo gem install assit
+</code>
+</pre>
+<p> and you'll be ready to use it.</p>
+<p>In the code, it'll work like this:</p>
+<pre>
+<code>
+require 'assit'
+
+# Just some examples, there are more assertions
+assit(defined?(assit)) # Yes, this is self-referential ;-)
+
+x = 2 + 3
+assit_equal(5, x, "There seems to be a problem with the addition")
+
+foo = Foo.new
+assit_kind_of(Foo, foo)
+</code>
+</pre>
+<p><!--more--></p>
+<p>When the assertion fails, an <i>action</i> will be taken - at the moment you can either print to stderr, or raise an error. But I'm planning for some more actions, and you can configure which one to use.</p>
+<p>It's also possible to disable assit: All the assertion methods will be replaced with calls to an empty method, so that the runtime overhead is minimal.</p>
+<h3>Technical details</h3>
+<p>I decide to let assit add it's methods to the basic <tt>Object</tt> class, so that it will be really easy to use. The drawback is that you cannot use the same method names anywhere in your code. That's why all the methods start with "<tt>assit_</tt>" - it's still similiar to "assert", but unlikely to be a "real" method name. Also, it doesn't conflict with the unit testing assertions.</p>
+<p>The assertion can be disabled at startup. In this case it will not load the assertion methods, but create aliases to an "empty" method that just returns <tt>nil</tt>. The only overhead will be the call to the dynamically created method (which should be o.k. by Ruby standards). </p>
+<p>If I've time, there will be more to come; for example I'd really like an action that automatically breaks to the debugger if an assertion fails.</p>

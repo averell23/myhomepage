@@ -1,0 +1,32 @@
+---
+layout: post
+title: Com port hell
+date: 2006-08-25 15:47:41.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Engineering
+tags: []
+meta:
+  _publicize_pending: '1'
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>Just a quick sef-reminder: Some Bluetooth applications on windows will only connect to a device through a virtual com port smaller than com9 or something. On the other hand, most bluetooth stacks seem to have to annoying habit to block a lot of com ports permanently if the adpater is plugged into different USB sockets.</p>
+<p>Unfortunately, those COM ports never show up in Window's hardware manager, even if you enable the "Show hidden devices" option; so there's no way to unistall them.</p>
+<p>At least there's a workaround, hidden deep inside the Microsoft knowledge base: <a target="_blank" href="http://support.microsoft.com/default.aspx?scid=kb;en-us;315539">http://support.microsoft.com/default.aspx?scid=kb;en-us;315539</a></p>
+<blockquote><p>At a command prompt, type the following command , and then press ENTER:</p>
+<p>set devmgr_show_nonpresent_devices=1</p>
+<p>Type the following command a command prompt, and then press ENTER:</p>
+<p>start devmgmt.msc</p></blockquote>
+<p>Remember that you still have to enable the "Show hidden devices" option in the hardware manager to see the "ghost" devices.</p>

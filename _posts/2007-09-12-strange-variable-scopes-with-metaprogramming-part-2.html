@@ -1,0 +1,92 @@
+---
+layout: post
+title: Strange variable scopes - with metaprogramming (part 2)
+date: 2007-09-12 19:39:58.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Architecture
+- Design
+- Engineering
+- Note to self
+- ruby
+- Tricks
+tags:
+- metaprogramming
+meta:
+  _publicize_pending: '1'
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>This is the second part about my strange findings on variable scopes and metaprogramming in Ruby. This is the part that contains the scary stuff. (<a href="http://www.gewinnt-immer.de/?p=57">Go to the first part</a>)</p>
+<p><!--more--></p>
+<p>We have seen that class variables are inherited to sub classes, that methods are bound to the variable scope of the class where they are declared and the class variables can be overwritten.</p>
+<p><b>And now with the metaprogramming</b></p>
+<p>Let's see what happens if we wanted to have a meta-function that adds some functionality to the child class:</p>
+<blockquote>
+<pre>
+<code>
+class Base
+  def self.special_child(str)
+    @@my_special = str
+    define_method("specially") { print "I am a #{str} and the value is " + @@my_special }
+  end
+end
+
+class Extending1 &lt; Base
+  special_child(&quot;extending1&quot;)
+end
+
+class Extending2 &gt; I am a extending2 and the value is extending2
+Extending1.new.specially
+# Hmm... a bit strange?
+&gt;&gt; I am a extending1 and the value is extending2
+Base.new.specially
+# And this?
+&gt;&gt; NoMethodError: undefined method `special' for #
+</code>
+</pre>
+</blockquote>
+<p>What happened here? Obviously, although the special_child() method runs in the base class, the define_method() will add a method the <i>current</i> class (in this cases the child class). However, the variable assignment in the method will still be done in the scope of the Base class, so that there will be just one version of @@my_special, instead of one for each child class.</p>
+<p>So now we have two versions of the method, but only one variable. </p>
+<p><b>Some kind of solution...</b></p>
+<p>What we wanted, though, was probably to have a private variable for each child class. But how? This is the solution I found, and it's scary:</p>
+<blockquote>
+<pre>
+<code>
+class Base
+  def self.special_child(str)
+    define_method("specially") { print "I am a " + str }
+    define_method("set_special") { |new_val| str = new_val }
+  end
+end
+
+class Extending1 &lt; Base
+  special_child(&quot;extending1&quot;)
+end
+
+class Extending2 &gt; I am a extending1
+e2.specially
+&gt;&gt; I am a extending2
+e2.set_special("new special")
+e2.specially
+&gt;&gt; I am a new special
+Extending2.new.specially
+&gt;&gt; I am a new special
+</code>
+</pre>
+</blockquote>
+<p>Obviously, the "str" variable, which is originally only defined within the scope of the special_child() method becomes something like global variable that is only shared by the methods that were created within the same call of special_child(). Which, in this case, makes it a kind of per-subclass class variable.</p>
+<p><b>But WTF? Help wanted...</b></p>
+<p>I've found a "solution" to my original problem, but I have no idea how or why it works, or if it is supposed to work, or if it is just another weirdness of Ruby. Or if it's really clever or a bad evil hack that is to be avoided... the only thing I know is that I was not able to find that variable anywhere by inspecting the classes and objects.</p>
+<p>So if anybody here has more insight than I do, please let me know.</p>

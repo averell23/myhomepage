@@ -56,15 +56,58 @@
 
 
       <div class="container mx-auto px-2 py-4">
-        <a class="no-underline h5 bold text-accent" title="Test" href="#">My Stuff</a>
         <div class="py-2 mb-2 prose">
           <h2 class="h1 lh-condensed col-9 mt-0">
-            Welcome
+            Where to find things
           </h2>
-          <p>Some test text</p>
+          <p>
+            As most of the time I don't have time to write longer texts, the
+            "blog" portion of this page will rarely be updated; and if it
+            is the content will be mirrored on Medium as well.
+          </p>
+          <h3>Professional Stuff</h3>
+          <ul>
+            <li>
+              <a href="https://www.linkedin.com/in/daniel-hahn-2b636215" class="text-accent">LinkedIn</a>
+              and
+              <a href="https://www.xing.com/profile/Daniel_Hahn8" class="text-accent">Xing</a>
+              have all you need to know about my professional experience.
+            </li>
+            <li>
+              <a href="https://github.com/averell23/" class="text-accent">
+              My github profile</a> shows which projects I have worked on.
+            </li>
+          </ul>
+          <h3>Written Stuff</h3>
+          <ul>
+            <li>
+              Short musings will be on
+              <a href="https://twitter.com/averell23" class="text-accent">Twitter</a>,
+              Google Plus and such will receive a copy.
+            </li>
+            <li>
+              Longer texts will still be published here, and be available on
+              Medium as well.
+            </li>
+            <li>
+              You will still find all my old writings here, minus the crossposts
+              from Twitter.
+            </li>
+          </ul>
+          <h3>Photography</h3>
+          <ul>
+            <li>
+              My <a href="https://www.instagram.com/averell23/" class="text-accent">Instagram
+              profile</a> will have the pictures of the day.
+            </li>
+            <li>
+              My <a href="#" class="text-accent">photography site</a> has of
+              my images, on various topics.
+            </li>
+          </ul>
         </div>
 
-        {% for post in site.posts %}
+        {% for post in site.posts limit: 3 %}
           {% include post_block.html %}
         {% endfor %}
 

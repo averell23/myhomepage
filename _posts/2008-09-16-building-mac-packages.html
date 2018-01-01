@@ -1,0 +1,36 @@
+---
+layout: post
+title: Building Mac Packages
+date: 2008-09-16 10:26:34.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Engineering
+- Note to self
+- Tricks
+tags:
+- configuration
+- installer
+- mac
+- package
+meta:
+  _publicize_pending: '1'
+  _edit_last: '7360710'
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>Since we'll need to deploy our application soon in a Mac environment, I'm in the process of building an installer package that our partner's local staff will be able to handle.</p>
+<p>Usually the preferred installation (and deinstallation) method on the Mac is drag-and-drop, which is really the best method I've ever encountered on any operating system. But for packages that need to be integrated into the system, such as ours, Apple has a built-in-installer package mechanism.</p>
+<p>The installer itself is not too bad, although it doesn't even consider that you might want to <em>uninstall</em> anything. But the worst part is definitively the "PackageMaker" application that comes with Apples developers' tools. </p>
+<p>I've seldom seen such a sorry excuse for a tool - it will actually <em>loose settings</em> if you uncheck a certain box in the UI, and more fun like that.</p>
+<p>Fortunately, I found a nifty tool called <a href="http://s.sudre.free.fr/Software/Iceberg.html">Iceberg</a>, which let's you build Apple-compatible installer packages. Though it's still a bit rough in some places, it's already richer in features and works much better than the default Apple solution. Check it out if you need to create any Mac installer package.</p>

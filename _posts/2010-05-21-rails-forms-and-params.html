@@ -1,0 +1,30 @@
+---
+layout: post
+title: Rails forms and params
+date: 2010-05-21 12:07:45.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Note to self
+- ruby
+- Tricks
+tags: []
+meta:
+  _publicize_pending: '1'
+  _edit_last: '7360710'
+  image_value: "/wp-content/files/andrewr.jpg"
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>Another not to self: Rails has the cool feature that you it will map all the values from your submitted forms into the <code>params</code> hash. And, if you create input fields that are named "<code>something[bla]</code>", it will automatically create a nested hash so that you will be able to access <code>params[:thingyform][:something]</code>.</p>
+<p>But what if you just have a list of things that you need to submit? In this case, just name multiple form fields <code>something[]</code>, and the <code>params</code> will contain an array.</p>

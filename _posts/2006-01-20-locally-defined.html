@@ -1,0 +1,31 @@
+---
+layout: post
+title: Locally defined
+date: 2006-01-20 15:49:15.000000000 +01:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Engineering
+- Philosophy
+- Tricks
+tags: []
+meta:
+  _publicize_pending: '1'
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>In the olden times, there were some languages which forced you to declare every local variable at the beginning of a function. Oh, and yes: This was, more or less, a technical restriction. That doesn't mean it's a good practice in all other cases, although it may satisfy some anal definitions of "tidyness".</p>
+<p><!--more--></p>
+<p>Of course the location of your variable definitions only matters in long methods; which, by definition, you should not have. But if you do, it's quite a pain when a variable is defined 50 lines from where it's actually used.</p>
+<p>Local variables, in general, are not your friends; they make refactorings harder. In most cases, it's probably better to ask an object for something repeatedly instead of using a "temp" variable. </p>
+<p>Personally, I like to keep local variables as local as possible. This means declaring them in the innermost scope, only declaring them when I'm about to need them and not to re-use a variable for a different purpose.</p>

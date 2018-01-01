@@ -1,0 +1,44 @@
+---
+layout: post
+title: The Cryptosomething
+date: 2009-06-17 14:24:41.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Engineering
+tags:
+- authentication
+- code
+- cryptography
+- ruby
+- security
+meta:
+  _publicize_pending: '1'
+  _edit_last: '7360710'
+  image_value: "/wp-content/files/architecture.jpg"
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>When I stumbled over <a href="http://www.matasano.com/log/1749/typing-the-letters-a-e-s-into-your-code-youre-doing-it-wrong/">yet another article</a> on how you get your cryptography wrong, I remember that I did something similiar myself.</p>
+<p>No, not the broken scheme from that article, but I had needed to use some crypto functions to verify some data that had been handed to the user before.</p>
+<p><!--more--></p>
+<p>The problem was similar to the one above: I had to stuff some session data into a hidden field on the page. When it was re-submitted, I needed to make sure that the incoming data blob had been tampered with by the user. Meaning that I needed to verify if a given piece of data actually came from a trusted source.</p>
+<p>Reviewing my code, it doesn't look too bad:  I didn't use some strange shared-key encryption scheme. In fact, I didn't use encryption at all - if your data is "secret", you probably shouldn't send it out to the user in the first place. Instead, I'm just encoding and zipping the data and then slab a <a href="http://en.wikipedia.org/wiki/Message_authentication_code">MAC (Message Authentication Code)</a> on it. I'm passing the whole stuff of to OpenSSL, so the implementation should be reputable enough. </p>
+<p>It's more or less the same mechanism that Rails uses for it's session cookies. I even added a nifty little feature that the secret key is automatically generated on the first startup, so there's no default value that you have to change.</p>
+<p>Still there could very well be a bug, and the evil thing about crypto bugs is that you never notice them, and you can't test for them either. So I'm posting the code below - have a go and see if you find an exploit.</p>
+<p>The weaknesses I've seen so far:</p>
+<ul>
+<li>I'm still using MD5, as it is the most portable at this time. While it has been successfully cryptanalysed, cracking it will still take more effort than it's worth for the sites I'm working on. Plus there, are probably more promising angles of attack. Nonetheless, it's a no-brainer replacing the algorithm when needed.</li>
+<li>There's no protection against replay attacks, as I simply didn't consider it important for the application.</li>
+</ul>
+<p><a href="http://gist.github.com/131213.js">http://gist.github.com/131213.js</a></p>

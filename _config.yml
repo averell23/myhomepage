@@ -1,12 +1,15 @@
 # Site settings
-title: Test Foo
+title: Daniel Hahn
 email:
 description: >
+  This is a hub to finding my stuff. While my presence is all over the net,
+  I still keep my own page as a starting point.
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "" # the base hostname & protocol for your site
 
-twitter_username:
-github_username:
+social_link: twitter
+social_username: averell23
+github_username: averell23
 
 theme: jekyll-swiss
 theme_color: red

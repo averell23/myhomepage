@@ -1,0 +1,45 @@
+---
+layout: post
+title: Debugging fun
+date: 2005-05-20 18:39:54.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Debugging
+- Engineering
+- Note to self
+- Tricks
+tags: []
+meta:
+  _publicize_pending: '1'
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>I had some fun with the Visual Studio debugger today, and actually learnt a few new tricks (even though I'm aware this may be an old hat to some ;-)</p>
+<p>The problem: I had an object which contained an invalid pointer, and crashed the application. Ups. I could see that the object started out fine, but somewhere along the way said pointer was modified to point to nowhere. I had no idea <em>where</em> the pointer was modified, however.</p>
+<p>So what I really wanted to do was my program to break whenever that pointer was touched.</p>
+<p><!--more--></p>
+<p>At the first glimpse, this appears easy: You just <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vsdebug/html/_asug_setting_breakpoints.asp">create a new data breakpoint</a>, telling the debugger that you want to break whenever variable foo is changed. </p>
+<p>Unfortunately, this only works if you also give a <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vsdebug/html/vchowcontextoperator.asp">context</a> in which the variable is valid. (You can only break on foo when you know foo.) And I didn't have a symbolic name for the object  that was valid in all scopes.</p>
+<p>What I did have was the object's address (let's say 0x002342). I can tell the debugger to set a data breakpoint on that address. It will break when the value at that address is changed. Which still isn't quite what I wanted.</p>
+<p>If I watch the object's address, the debugger will only watch this one memory location, which is one byte at the start of the object's memory location. You could tell the debugger to check sizeof(MyCoolClass) bytes for changes. This will break on <em>any</em> change to the object, but if your object isn't tiny it stalls the debugger.</p>
+<p>What I really needed was a breakpoint on the myFooPointer member, which is stored at the n-th byte of the object.</p>
+<p>There are several ways to get at the myFooPointer address.</p>
+<ul>
+<li>See the complete address space of the object, by evaluating something like<br />
+((void*) 0x002342),123 (replacing 123 with the size of your object), and try to find the offset manually. This is not the brightest idea ;-)
+</li>
+<li>Dereference the pointer by evaluating &amp;((MyCoolClass*) 0x002342)-&gt;myFooPointer) and use that address as the breakpoint.</li>
+<li>If you want to be really nifty, you give the expression ((MyCoolClass*) 0x002342)-&gt;myFooPointer as the breakpoint location. This works, too.</li>
+</ul>
+<p>I also found that when you give an object address as a breakpoint location, the breakpoint will be hit on object deletion.</p>

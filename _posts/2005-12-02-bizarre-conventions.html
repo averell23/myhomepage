@@ -1,0 +1,41 @@
+---
+layout: post
+title: Bizarre conventions
+date: 2005-12-02 17:30:58.000000000 +01:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Engineering
+- Philosophy
+tags: []
+meta:
+  _publicize_pending: '1'
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>For some reason, <code>return </code>statements are outlawed in our shop. The official reason given is that you'd always need a place to "clean up things", which is not guaranteed when you use <i>return</i>. Personally, I think that's a bit far-fetched, but whatever.</p>
+<p>However, to keep things a bit more readable, something called the "for-bool-loop" has been established. The ingenious snippet works like this:</p>
+<p><!--more--></p>
+<p><code><br />
+for(bool bCond = true; bCond; bCond = false)<br />
+{<br />
+   do_something();<br />
+   if(!success) {<br />
+      set_error();<br />
+      break;<br />
+   }<br />
+   do_something_else();<br />
+}<br />
+</code></p>
+<p>I personally consider this to be, er, a bit bizarre. In most cases, <i>return</i>s would have been perfectly acceptable instead of this <i>goto</i> in disguise. I'm perfectly happy with returning or breaking (even goto) where it makes sense; but this thing seems somewhat gross.</p>
+<p>Anyway, what's your opinion on this?</p>

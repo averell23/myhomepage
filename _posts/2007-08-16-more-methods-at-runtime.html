@@ -1,0 +1,41 @@
+---
+layout: post
+title: More methods at runtime
+date: 2007-08-16 14:58:00.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Design
+- Engineering
+- ruby
+- Tricks
+tags:
+- metaprogramming
+- methods
+meta:
+  _publicize_pending: '1'
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>As I expected, I missed some stuff in my last post about <a href="/?p=55">adding methods at runtime</a>. One thing is that the idiom for adding class methods is "class &lt; &lt; self&quot; rather than &quot;class &lt;&lt; Classname&quot;</p>
+<p>More importantly, if you define things like I did in my last post, you will not be able to use variables in the method definition. The things after &quot;class &lt;&lt; self&quot; are executed in a different scope that doesn&#039;t inherit the variables from the surrounding code.</p>
+<p>Fortunately, Ola Bini has <a href="http://ola-bini.blogspot.com/2006/09/ruby-singleton-class.html">a post that explains some of these things in more detail. Obviously, the idiom for creating class methods at runtime uses a combination of "module_eval" and "define_method":</p>
+<p><!--more--></p>
+<pre>
+<code>
+class Test
+  def self.makemethod(methodname)
+    (class &lt; hello says world
+</code>
+</pre>
+<p></a></p>

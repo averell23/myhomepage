@@ -1,0 +1,100 @@
+---
+layout: post
+title: Java and C#
+date: 2005-04-14 11:35:52.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Architecture
+- Engineering
+tags: []
+meta:
+  _publicize_pending: '1'
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>
+I've been developing with C# for about three months, and I guess it's time to draft a comparison to my (previous) fovourite programming language: Java. Both aren't very different. In fact, you could say that C# is just Java with an attitude, and Java has been quick to duplicate most of the features introduced in C#.</p>
+<p>
+If you want a fairly complete (though a little outdated) comparison from the programmer's perspective, <a href="http://www.25hoursaday.com/CsharpVsJava.html#wora">here's a nice article about it</a>.</p>
+<p>
+I'm going to delve into some of the features that are often left out by such comparisons.</p>
+<p><!--more--></p>
+<p>
+<strong>Language Features</strong></p>
+<p>
+C# introduced some new language features, which have since been adopted by Java: automatic boxing/unboxing, the foreach loop, enums and such. (Generics are also upcoming, but Java already has them and C++ had them for ages). I won't go into the details of those, they can be looked up all over the web.</p>
+<p>
+One of the most irritating differences in is the complete absence of checked exceptions in C#. Although the design team had <a href="http://www.artima.com/intv/handcuffs.html">very good reasons not to include Java-style checked exceptions</a>, one problem remains: Currently, there's no easy way to tell if some method will raise an exception or not, which may break your application at unexpected points. It remains to be seen if there will be code ananlysis tools available to adress this problem.</p>
+<p>
+On the other hand, anonymous classes are not really missed in C#: The main use for this feature is event handling (and the infamous "typesafe enum pattern"). In C# this is done by <em>delegate</em>s, an object-oriented version of function pointers. They allow to easily encapsulte a method into an object and pass it around, which is C#'s preferred way of writing event handlers.</p>
+<p>
+Generics (as in: Templates) will be in the upcoming .NET 2.0 release. Unlike their Java counterpart, which was designed to run on all existing VMs drawbacks.</p></p>
+<p>
+<strong>Frameworks</strong></p>
+<p>
+If we're honest, few people will switch a language just for some syntactical features. People switch to new languages because they come with comprehensive class libraries, which include all those little storage classes and routines for everyday tasks. And make life so much easier.</p>
+<p>
+Both Java and C# include object-oriented class frameworks. The origininal Java framework had not always been thought through, and the designers often took an rather academical approach. (For example, all of the original storage classes like <em>Vector </em>where <em>synchronized</em> - which made them easy to use, but was prohibitively slow in many<br />
+applications). The framework has since been revamped, and is now a modern and useful collection of classes.</p>
+<p>
+Java always included a GUI toolkit - and always had difficulties mating it with the "write once, run everywhere" approach. The current SWING version makes interface programming quite easy, but the performance still isn't very impressive. SWING also brings it's own look and feel, which may be irritating to some users.</p>
+<p>
+There are some astonishing Java GUI applications out there (look at the <a href="http://www.netbeans.org/">Netbeans</a> IDE, for example) - but they all seem to be software development tools.</p>
+<p>
+The .NET framework library is not specific to C#; it is a common set of class libraries to all .NET programming languages. The library was obviously built on the experiences with Java, and generally seems to take a more practical and hands-on approach.</p>
+<p>
+It has to satisfy the demands of a wide range of developers, from ASP.Net web hackers to<br />
+object-oriented software engineers. Thus, multiple approaches are available in many places (e.g. you can go <em>myFileObject.Exists</em> or <em>File.Exists("myFileName")</em>). Tradeoffs had to be made in some places, and the implementation still has to mature a bit. Still, the framework is at least up to par with Java, and ready for production use.</p>
+<p>
+.NET uses the <em>Windows.Forms</em> library for GUI programming which (surprise!) is tied to the Windows operating system. This reduces portability, but makes it easy to write performant and well-integrated GUI applications. If you want more portability you'll either to wait for the Mono port of the library, or use the GTK# toolkit instead: This will allow you to easily write performant and well-integrated applications for the Gnome desktop, which will also run on Windows systems.</p>
+<p>
+<strong>Under the hood</strong></p>
+<p>
+At the core, both languages share some important properties: Both are garbage-collected, and both compile to a platform-independent format. Both features can increase productivity, which, for many applications, is more important than raw performance.</p>
+<p>There's not much to say about the garbage collection. In most cases it simply works, and those cases where it doesn't are beyond the scope of this article.</p>
+<p>
+The notion of an language independent format (or "byte code") has been introduced in Java as the core part of the "run once, write everywhere" strategy. The Java bytecode can either be interpreted or compiled into native code at runtime by a just-int-time (JIT) compiler. The original Java versions came with an interpreter - this is not the speediest mode of excecution and was partly responsible for Java's reputation as a "slow" language. Today, JIT compilers are widely available and together with faster processors, they bring Java excecution up to decent speed.</p>
+<p>
+C#'s bytecode is called (MS)IL - the Micrsoft Intermediate Language - and can only be JIT-compiled. The IL is shared by all .NET programming&lt;languages : All of them (C#, managed C++, VB.Net, ...) will be compiled to the same IL and may use modules written in other languages as easily as &quot;native&quot; libraries. This also means that the .NET class framework is language-independent and shared by all .NET languages.</p>
+<p>
+Java proponents are somehow convinced that .Net is not truly "write<br />
+once, run everywhere" and tied to the Windows operating system.<br />
+Technically speaking, this is not true: Both Java and .Net programs<br />
+will run exactly (and only) where a runtime environment is available<br />
+for the respective byte code. A GPLed runtime environment is already<br />
+available for Linux.</p>
+<p>
+There are also some "performance" features in C#, which are missing from Java. Most notably, it is possible to have non-<em>virtual </em>methods in C#. In fact, C# methods are non-<em>virtual </em>by default. Thus, it is possible to eliminate the overhead of the virtual calls, which can be significant in certain scenarios. In Java, where all methods are implicitly virtual, the only hope is to mark a class <em>final </em>and hope that the JIT compiler will optimise the virtual calls away.</p>
+<p>
+The main drawback of this feature is that it adds a additional complexity to the language, since you'll have to decide when to make a method <em>virtual </em>and how to override it. However, C# will not allow the programmer to override any method (virtual or not) without explicitly stating the intention with the use of the <em>overrides </em>or <em>new </em>keyword.</p>
+<p>
+<em>Struct</em>s and <em>enum</em>s are also value types in C#, which removes a level of indirection compared to their Java counterparts.</p>
+<p>
+<strong>Toolchain</strong></p>
+<p>
+Developers like cool tools. Java, having been around for some years, can definitively score in this area. Most Java developers will know and use tools as <a href="http://ant.apache.org/">Ant</a>, <a href="http://www.junit.org/">Junit</a> or Javadoc.</p>
+<p>
+Projects for similiar .NET projects already exist, but are sometimes playing catch-up to the Java versions. Some tools, on the other hand, are already very mature and even surpass the features of their Java counterparts. (As does the <a href="http://www.nunit.org/">NUnit</a> unit testing framework).</p>
+<p>
+<strong>Politics and Philosophy</strong></p>
+<p>
+In the eyes of many, .NET and the C# language suffer from being an Evil From Redmont (tm), with capital 'E'. Just look at all the flak Miguel de Icaza got when he dared to suggest making .NET/Mono a core technology of the Gnome desktop. And although it's a pretty nice technology, many open source developers won't even look at C#, because it's a "proprietary" technology (which is compared to the percieved "openeness" of Java).</p>
+<p>
+In fact, C# and the runtime <em>are </em>standardised (by ECMA), even though it is clear that Microsoft will be the driving force behind further developments. Java is as much at the whim of Sun, as .NET is at the whim of Microsoft.</p>
+<p>
+Microsoft has one goal: They want their technology to win. That's why .NET will be a core technology of the upcoming "Longhorn" windows version. If you got all the goodies of Java built right into your operating system, there's no big incentive in downloading the SDK any more. That's the way how they won the browser war. If this happens, the open source scene is not likely to make a difference.</p>
+<p>
+However if it's done right, open source may even benefit from that - if things like the Mono project are done right. If Windows software is .NET at the core, and if we have .NET on our Linux desktop, we may actually have the interoperability that Java (and such ill-fated projects as Wine) always promised.</p>
+<p>
+There are a lot of ifs in this equation, but it's something to look out for.</p>

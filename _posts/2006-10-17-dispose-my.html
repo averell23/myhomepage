@@ -1,0 +1,46 @@
+---
+layout: post
+title: Dispose my $%!
+date: 2006-10-17 10:23:49.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Architecture
+- Engineering
+- Note to self
+- Philosophy
+tags:
+- ".net"
+- microsoft
+meta:
+  _publicize_pending: '1'
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>I've just come across you particularly annyoing feature in the new Version of the C++ Managed Extensions for .NET.</p>
+<p>For garbage-collected languages, it is recommended that you follow the "Dispose" pattern in order to free non-memory resources. That's a well established pattern, if you want to know more about it you can read <a title="Dispose Codeproject" href="http://www.codeproject.com/useritems/idisposable.asp?df=100&amp;forumid=336052&amp;exp=0&amp;select=1659383">here</a> or <a title="Dispose Blog" href="http://www.bluebytesoftware.com/blog/PermaLink.aspx?guid=88e62cdf-5919-4ac7-bc33-20c06ae539ae">here</a>. There are a few rules on how to implement this pattern. Microsoft also added an interface for disposable objects, that allows for some syntactic sugar.</p>
+<p>However in the "new" version of the Managed Extensions for C++, they came up with a different way to implement the dispose pattern. This mimics the way destructors work in plain C++.</p>
+<p><strong>They also came up with the brilliant idea that it should not be allowed to call the Dispose() method directly:</strong></p>
+<p><font size="2" face="Arial"> From a <a title="New Dispose Syntax C++" href="http://blogs.msdn.com/arich/archive/2004/10/18/244148.aspx">Microsoft blog</a>:</font></p>
+<blockquote><p><font size="2" face="Arial"><strong>A bit of discussion about Dispose</strong> brought up an interesting point - in C++, now, we've disabled the ability to call the Dispose function directly.  Instead, you call it thusly:</font></p>
+<p><font size="2" face="Courier New"></font><font color="#0000ff">ref class</font> MyClass{<br />
+<font color="#0000ff">public</font>:<br />
+~MyClass(){} <font color="#008000">//overrides IDisposable::Dispose()</font><br />
+};</p>
+<p><font size="2" face="Courier New"></font><font size="2" face="Courier New"></font><font size="2" face="Courier New"></font><font size="2" face="Courier New"></font><font color="#0000ff">int</font> main(){<br />
+<font size="2" face="Courier New">  MyClass^ mc = </font><font color="#0000ff">gcnew</font> MyClass();<br />
+<font size="2" face="Courier New">  </font><font color="#008000">//do stuff</font><br />
+<font size="2" face="Courier New">  mc-&gt;Dispose(); </font><font color="#008000">//error!</font><br />
+<font size="2" face="Courier New">  mc-&gt;~MyClass(); </font><font color="#008000">//legal, calls Dispose()</font><br />
+<font size="2" face="Courier New">  delete mc; </font><font color="#008000">//also legal, also calls Dispose()</font></p></blockquote>
+<p>Now, whoever came up with that should be kicked in the butt. Quite hard.</p>

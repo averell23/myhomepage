@@ -1,0 +1,56 @@
+---
+layout: post
+title: Ruby overloading
+date: 2007-08-15 19:28:47.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Architecture
+- Design
+- Engineering
+- Philosophy
+- ruby
+- Tricks
+tags:
+- overloading
+meta:
+  _publicize_pending: '1'
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>A new thing on my quest to learn the new language is weird inconsistency that bugged me lately: In Ruby you can overload virtually everything. That is, everything except the "equals" operator.</p>
+<p>In spite of this, half of the Rubyists seem to believe that they overload the "equals" sign all the time. </p>
+<p>Still, if you have this kind of expression: </p>
+<blockquote><p>variable_1 = variable_2</p></blockquote>
+<p>it will assign the value of variable_2 to variable_1, and there's no way to change this behaviour.</p>
+<p>However, if have something that looks like this</p>
+<blockquote><p>object.method = expression</p></blockquote>
+<p>the code will actually be evaluated equivalent to</p>
+<blockquote><p>object.send("method=", expression)</p></blockquote>
+<p><!--more--></p>
+<p>Yes, that's true: The expression above will actually call a method called "method=" with the value left of the "equals" sign as a parameter.</p>
+<p>The nice point is that you can at least write a logic for "method assignments".</p>
+<p>Not so nice is the fact that there's still no way to overload "equals", and that these method assignments work completely different than "normal" operator overloading.</p>
+<p>Which means that if you call</p>
+<blockquote><p>object.method + expression</p></blockquote>
+<p>Ruby will first evaluate object.method and <strong>then</strong> call the "+" method on the object that was returned from the first call.</p>
+<p>On the other hand, the call</p>
+<blockquote><p>object.method = expression</p></blockquote>
+<p>will call the "method=" method <strong>on object</strong> and return it's result. And "method=" is completely unrelated to "method".</p>
+<p>Even worse, if you call</p>
+<blockquote><p>object.method += expression</p></blockquote>
+<p>this will evaluate "object.method", <strong>then</strong> call the "+" method on the object that was returned by this call. <strong>Then</strong> it will call "method=", giving the reference to the object from the previous step as a parameter:</p>
+<blockquote><p>
+x = object.method<br />
+object.method=(x+expression)
+</p></blockquote>

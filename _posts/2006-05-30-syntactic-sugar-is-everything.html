@@ -1,0 +1,35 @@
+---
+layout: post
+title: Syntactic sugar is everything
+date: 2006-05-30 20:10:33.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Engineering
+- Philosophy
+tags: []
+meta:
+  _publicize_pending: '1'
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>Now that <a href="http://www.gewinnt-immer.de/?p=33">I'm playing around with Java again</a>, I notice how I really like some of the design decisions in C#. For example, C# supports so-called properties, which just syntactic sugar for getter and setter methods.<br />
+I know some people think that "syntactic sugar" is not really useful in this age of modern IDEs and code completion, some even think it's a bad thing because it hides implementation details. But then...</p>
+<p><!--more--></p>
+<p>If, in Java, you want to please the gods of object orientation and <a href="http://en.wikipedia.org/wiki/Encapsulate_Field">encapsulate your fields,</a> you use getter and setter methods. It's not even a lot of work, I just tell my IDE to "encapsulate fields", and it creates all those tiny ugly methods for me. Incrementing a value on an object will be a simple matter of something like:</p>
+<blockquote><p><strong>mycoolobject.setSomeVariable(mycoolobject.getSomeVariable() + 1)</strong></p></blockquote>
+<p>You can see exactly what's going on, but it's just plain ugly. In C#, using properties, you can do the same thing with</p>
+<blockquote><p><strong>myCoolObject.SomeVariable += 1</strong></p></blockquote>
+<p>This looks like a petty difference, but it makes your code much more <em>conscise</em>. You immediately see what I'm going to do. This also goes for things like the <strong>foreach </strong>loop or the <strong>using</strong> construct. I really like if I can express my ideas in code, instead of expressing the syntactic limitations of the language. I hope I'll find some time to try out Ruby...<br />
+My other gripe with Java are the checked exceptions. I just wanted to write a simple application for fun, and don't get bogged down with every possible error condition. In another language, I would just allow the exceptions to fall through. If there was an error, my application would fail early, and everything would be fine.</p>
+<p>In Java, I'll just select a menu item that reads "surround with try-catch", which catches each exception type seperately and prints a stack trace. (The very existence of this feature is an indication of the problem.) If an exception is thrown, I will probably never know. I could also automatically add  <strong>throw </strong>clauses, but the truth is it would still be a major hassle. I get nagged about error conditions which I don't care about. And the only easy way around this prevents the application to fail early if there really is a problem.</p>

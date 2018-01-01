@@ -1,0 +1,102 @@
+---
+layout: post
+title: Be sure where your methods are chained to...
+date: 2011-07-22 19:58:38.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Debugging
+- Engineering
+- ruby
+- Tricks
+tags: []
+meta:
+  _publicize_pending: '1'
+  image_value: "/files/crap.jpg"
+  _edit_last: '7360710'
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>I've just figured out a quite obscure bug in our app. It all started like this:</p>
+<pre>
+<code>
+record.freeze.things # record is an ActiveRecord, and "things" is an association on that record.
+TypeError: can't modify frozen object
+	from (irb):2:in `instance_variable_set'
+	from (irb):2
+</code>
+</pre>
+<p>The code above shouldn't crash, because ActiveRecord hast its own #freeze method, which will still allow access to the associations. But our record behaved as if Object#freeze had been called on it. What happend?</p>
+<p><!--more--></p>
+<p>It turned out that we had introduced an innocent-looking module:</p>
+<pre>
+<code>
+module Foobar
+  extend ActiveSupport::Memoizable
+
+  def other_things
+  end
+  memoize :other_things
+end
+</code>
+</pre>
+<p>and the included it into our ActiveRecord</p>
+<pre>
+<code>
+class Bar &lt; ActiveRecord::Base
+  include Foobar
+end
+</code>
+</pre>
+<p>What we didn't realize was that the Memoizable module contains some code for freezing objects:</p>
+<pre>
+<code>
+def self.included(base)
+  base.class_eval do
+    unless base.method_defined?(:freeze_without_memoizable)
+      alias_method_chain :freeze, :memoizable
+    end
+  end
+end
+
+def freeze_with_memoizable
+  memoize_all unless frozen?
+  freeze_without_memoizable
+end
+</code>
+</pre>
+<p>When we extended the module with the Memoizable code, we chained the "memoizable freeze" the the #freeze method of the module, which was Object#freeze. Then we injected the module into the Model class, and overwrote the call to the ActiveRecord#freeze method with our method chain.</p>
+<p>To fix this, you can work like this:</p>
+<pre>
+<code>
+module Foo
+
+...
+  def self.included(base)
+    base.class_eval do
+      memoize :other_things
+    end
+  end
+
+  def other_things
+  end
+end
+
+class Bar &lt; ActiveRecord::Base
+  extend ActiveSupport::Memoizable
+  include Foo
+end
+</code>
+</pre>
+<p>This way the memoization is included into the real ActiveRecord class, and all is fine.</p>
+<div>Photo: <a rel="cc:attributionURL" href="http://www.flickr.com/photos/leeco/">http://www.flickr.com/photos/leeco/</a> / <a rel="license" href="http://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a></div>

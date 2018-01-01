@@ -1,0 +1,80 @@
+---
+layout: post
+title: git submodules
+date: 2009-09-16 10:53:44.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Engineering
+- Process
+- Tricks
+tags:
+- git
+- hack
+- howto
+- submodule
+meta:
+  _publicize_pending: '1'
+  _edit_last: '7360710'
+  image_value: "/files/mbinside.jpg"
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>Today's lesson is mainly for the people who want to use the <a href="http://trac.talia.discovery-project.eu/">Talia</a> source code, but it could be useful for many git users, so I'm putting it here. In our code we use git submodules a lot; they are a bit like the good old <a href="http://svnbook.red-bean.com/en/1.0/ch07s03.html">svn externals</a> but have different quirks that are not that easy to understand. And of course neither the <a href="http://www.kernel.org/pub/software/scm/git/docs/git-submodule.html">official documentation</a> nor the <a href="http://git.or.cz/gitwiki/GitSubmoduleTutorial">tutorial</a> explain it in more detail. (I'll assume that you're already familiar with the general concept):</p>
+<p><!--more--></p>
+<p>Adding another git repository as a submodule couldn't be more easy:</p>
+<pre><code>
+git submodule add  
+</code></pre>
+<p>This will clone the "other_repo" and put it at the given path. The first thing to note is, that this is a completely independent repository. It will <strong>not</strong> be pushed, pulled or commited automatically when the "parent" repository is modified. </p>
+<p>Unlike a svn external, the submodule is a "pointer" to a specific revision instead of a URL. This means that, even if development on the submodule repository continues, your project will always use the <em>exact same version of</em> that module until you change that version.</p>
+<p>But how does it work?</p>
+<p>When creating the submodule, git creates two new things: A file called ".gitmodules" and a "fake" entry in the repository, which represents the submodule in the file system. Just think of that as a symbolic link to a specific revision.</p>
+<p>When someone clones the project, they will get the ".gitmodules" file and will have to do the following drill:</p>
+<pre>
+<code>
+git submodule init
+git submodule update
+</code>
+</pre>
+<p><strong>First catch:</strong> The "init" command will read the ".gitmodules" file and simply add it's content to .git/config". That's right, it will copy the configuration, and the ".gitmodules" file will <strong>not be used any more</strong>. Changes to the ".gitmodules" file will have no effect after you called "init". The only way to re-update your configuration is:</p>
+<pre><code>git submodule sync</code></pre>
+<p><strong>Second catch:</strong> The submodule is a full-blown git repository. Its contents are completely invisible to the parent repository, but the parent repository tracks the "pointer" to a specific version. When you do a "submodule update", the system will always fetch that particular version.</p>
+<p>But if you modifications to the submodule, by checking out another version/branch (or something like that) and then commit the parent repository, you will modify the "pointer" in the parent directory (assume the submodule is in ./submodule):</p>
+<pre><code>
+git submodule init
+git submodule update
+# -&gt; ./submodule now points to revision ABCE
+cd submodule
+git checkout XYZ
+# or hack, push, whathever ;-)
+cd ..
+git commit 
+# -&gt; ./submodule now to points to revision XYZ
+# Once you push, all other users will get XYZ when they
+# do a "git submodule update"
+</code></pre>
+<p><strong>Third catch:</strong> Updating submodules is not automatic. When you do a pull or merge, the "pointer" might be updated - but the submodule repository is <strong>not</strong>. </p>
+<pre><code>
+# submodule is currently at ABCE
+git fetch
+# submodule now points to XYZ, but the repository is unchanged:
+cd submodule
+git status
+&gt; ... repository is at ABCE
+cd ..
+git submodule update
+# submodule repository is updated to XYZ
+</code></pre>
+<p>(Disclaimer: I compiled this to the best of my knowledge, but I didn't have time to verify that it works as I promised...)</p>
+<div>Article Image: <a rel="cc:attributionURL" href="http://www.flickr.com/photos/h34dy/">http://www.flickr.com/photos/h34dy/</a> / <a rel="license" href="http://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a></div>

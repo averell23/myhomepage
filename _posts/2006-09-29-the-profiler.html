@@ -1,0 +1,69 @@
+---
+layout: post
+title: The Profiler
+date: 2006-09-29 14:06:33.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Engineering
+tags: []
+meta:
+  _publicize_pending: '1'
+  _edit_last: '7360710'
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>This week I had a first encounter with the new Visual Studio's profiler. Fortunately, my colleague Markus had already researched it's pecularities ;-)</p>
+<p>I didn't really try the GUI setup, though. I'm sure it works fine for regular projects, but for something large and complex you're bound to get your hands dirty.</p>
+<p><!--more--></p>
+<p>The profiling comes in two flavours: "Sampling" and "Instrumentation". Basically, the sampling mode gives you an overview of the performance, while the instrumentation mode will really profile each function call and allows you to get into the details. I'll only talk about the instrumentation mode from now on.</p>
+<p>If you just turn the instrumentation profiler loose, it will generate huge amounts of data;  you will really want to limit the profiling to the parts of your application which are actually interesting.</p>
+<p>Fortunately, you can control the profiler programatically. In native C++ applications, you'll have to link against <span style="font-weight:bold;">VSPerf.lib</span>, which comes with Visual Studio. Then you can do something like:</p>
+<blockquote><p>#include &lt;VSPerf.h&gt;<br />
+...</p>
+<p>StartProfile(PROFILE_GLOBAL, PROFILE_CURRENTID);</p>
+<p>DoSomethingNasty();</p>
+<p>StopProfile(PROFILE_GLOBAL, PROFILE_CURRENTID);</p></blockquote>
+<p>There are a bunch of other commands and options, which you can look up in the documentation.</p>
+<p>For C++ applications (native and managed) you'll also tell the linker to emit profiling information. The setting is under <strong>Linker -&gt; Advanced -&gt; Profile </strong>in the project preferences.<br />
+Managed applications need to reference the <span style="font-weight:bold;">Microsoft.VisualStudio.Profiler.dll</span>  and do something like:</p>
+<blockquote><p>#using Microsoft.VisualStudio.Profiler</p>
+<p>...</p>
+<p>DataCollection.StartProfile(ProfileLevel.Global, DataCollection.CurrentId);</p>
+<p>DoSomethingNasty();</p>
+<p>DataCollection.StopProfile(ProfileLevel.Global, DataCollection.CurrentId);</p></blockquote>
+<p>(I had a strange problem with mixed mode: I tried to controller from a managed C# assembly, which was called from managed C++ code, which was in turn called from the native C++ application. This resulted in the C# calls just being skipped over, without error. Even so, controlling the profiler in the native code worked fine. If you have a solution to this, let me know.)</p>
+<p>Now it's time to fire up the command prompt and set up your profiling session. Unfortunately the cygwin shell seems to be problematic, since windows scripts seem to have problems to set new variables in the bash.</p>
+<p>Before you get to the actual profiling, you'll need to instrument your files:</p>
+<blockquote><p>VSInstr &lt;MyExeOrDll&gt;</p></blockquote>
+<p>If you instrument managed assemblies with a strong name, this will whack the file's signature. You'll have to re-sign the assembly:</p>
+<blockquote><p>sn -R  &lt;MyManagedExeOrDll&gt; MySillyKey.snk</p></blockquote>
+<p>And, if you <strong>ever want to see the symbols</strong> (method names) from managed code, you'll have to set up some environment variables. Fortunately, there's a script coming with the profiler which allows you to do that. There are many options to it, but it will probably look like this:</p>
+<blockquote><p>VSPerfCLREnv /traceon</p></blockquote>
+<p>You can get a list of the possible settings by using the <strong>/?</strong> switch.</p>
+<p>Now that you're all set to go, it is time to start the profiler session:</p>
+<blockquote><p>VSPerfCmd /start:trace /output:MyResults.vsp</p>
+<p>VSPerfCmd /globaloff</p></blockquote>
+<p>The  first command start the profiler, and the second command disables the profiling. This means that the profiler won't collect any data until it hits the <strong>StartProfile()</strong> command in your code.</p>
+<p>Now you can start up your application, do the things that you want to profile, and shut it down again.</p>
+<p>After that, you have to shut down the profiler:</p>
+<blockquote><p>VSPerfCmd /shutdown</p></blockquote>
+<p>While you can use the command-line analysis tools, it will probably be easiest to just click on the new .vsp file to open it. This will bring up a new instance of Visual Studio with the profiling results; depending on the amount of data collected, you'll have to wait for a few minutes until the analysis is completed.</p>
+<p>And that's it! Here are some more links with information on how to use the profiler:</p>
+<ul>
+<li><a title="Limiting data" href="http://msdn.microsoft.com/vstudio/teamsystem/reference/technotes/profiling_windows_apps/limitdata.aspx">Limiting data collected in instrumentation mode using the profiling API</a> (MSDN Tech paper)</li>
+<li><a title="Make Your Apps fly" href="http://msdn.microsoft.com/msdnmag/issues/04/12/EnterprisePerformance/">Make Your Apps Fly with the New Enterprise Performance Tool</a> (MSDN article with a general introduction to profiling)</li>
+<li><a title="Tech notes" href="http://msdn.microsoft.com/vstudio/teamsystem/reference/technotes/default.aspx#Development">Visual Studio Tech Notes Index</a></li>
+<li><a title="Profiler FAQ" href="http://forums.microsoft.com/MSDN/ShowPost.aspx?PostID=339481&amp;SiteID=1">Visual Studio Performance Tool FAQ</a></li>
+<li><a title="Command Line Profiling" href="https://blogs.msdn.com/profiler/archive/2004/07/29/201202.aspx">Profiling from the Command Line</a> (Tips)</li>
+</ul>

@@ -1,0 +1,51 @@
+---
+layout: post
+title: Painting stripes on a cat
+date: 2005-04-14 11:34:45.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Engineering
+tags: []
+meta:
+  _publicize_pending: '1'
+  _edit_last: '7360710'
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>This week, Java <a href="http://www.heise.de/newsticker/meldung/48644">released</a> the final version of J2SE 1.5, codename "tiger". With this name, Sun wants to suggest that this version makes Java a real powerful and mighty language. </p>
+<p>
+On the first view on the list of <a href="http://java.sun.com/j2se/1.5.0/docs/relnotes/features.html#lang"> new features</a> introduced, you are impressed by the large set of enhancements and improvements. So let's have a closer look.</p>
+<p><!--more--></p>
+<p>
+On the first view on the list of <a href="http://java.sun.com/j2se/1.5.0/docs/relnotes/features.html#lang"> new features</a> introduced, you are impressed by the large set of enhancements and improvements. So let's have a closer look.</p>
+<p> The first thing that the list of new features points out in bold<br />
+letters is the support for 64 bit processors. Unfortunately, this does not mean that Java overcomes one of the worse mistakes in its language design: The decision to fix all data types to 32 bit. This implies that you have to emulate all 32 bit operations using 64 bit operations, which involves a lot of conditional jumps and masking, especially to provide the same overflow behaviour on basic types. So the performance boost of a 64 bit processor is blown for backwards compatibility. </p>
+<p>Now, the language enhancements.</p>
+<p>First of all, Java finally includes enumerations. <a href="http://jcp.org/aboutJava/communityprocess/jsr/tiger/enum.html">Sun claims</a>, that their enumarations has <i>many advantages over the enum facilities in C, C++, C# and Pascal</i>. If you take C++, than <i>many</i> is 3:</p>
+<ul>
+<li><i>Typesafe constants aren't compiled into clients, so you can add, reorder or even remove constants without the need to recompile clients. (If you remove a constant that a client is using, you'll fail fast with an informative error message.)</i> That means that to access an enumeration value, you have to resolve its symbol on the owning class. This is a significant performance penalty compared to the usage of an integer constant, not to talk about that it prevents the compiler to do optimizations. </li>
+<li><i>You can add arbitrary fields and methods to an enum class.</i><br />
+Why the hell should I want this? I can put the enumeration in an ordinary class and have the same effect? So why does Java repeats the stupidity in C++ that you have two keywords for the same purpose (class and enum in Java, class and struct in C++). </li>
+<li><i>Printed values are informative. (Which would you rather see in a stack trace: "Indigo" or "6?")</i><br />
+If you like stoneage technology debugging, and run on the command line, granted. On my (C++)  IDE, enum values are replaces by their symbolic names anyway.</li>
+</ul>
+<p>
+Why did Sun implement such dubious features, instead of introducing real powerful subtypes, so that you can not only define enumerations in a typesafe way but also (continous and discontinous) subsets of data types?</p>
+<p>Next. Java introduces Generics. These (as the C++ templates) provide you a way to reuse the same code on different data types, especially on basic types. This is most often used for container classes. This feature, too, is very similar to the way it is implemented in C++: Unfortunately, Java imported not only the feature but also the problems from C++; the excessive code bloat: As on C++, the compiler creates a seperate byte code for each instantiation of the generic with a type. Here too, Java reaches the state of the art in language design, but<br />
+they miss the possibility to be ahead the other languages: There are research papers which show how to provide generics which avoid code blow without introducing reasonable performance losses</p>
+<p>Enhanced <i>for</i> loop. This is one of the worse examples of language design ever seen and at the same time one of the most useless. It is really bad, cause it introduces a handling <i> for a special case</i> into the language: It provides a shorted syntax to iterate with a <i>for</i><br />
+loop through a data collection, and therefore expects a specific interface to be available at the class to iterate on. So this feature mixes up language syntax (the for loop) with an object oriented<br />
+implementation scheme (generic functionality via interfaces). It is useless, because a good editor can generate you the loop head to iterate through a collection on a simple key shortcut, which is even more efficient than having a shorter syntax, and, in my opinion, more readable cause it does the iteration in an explicit way. Next will be a language extension to simplify the access of classes implementing the Hashable interface?</p>
+<p>There are more language extension: Metadata, Static Import, Autoboxing and varargs. These extensions are not especially bad, but they only provide the possibility to shortcut some expressions in the language. In times of automatic completion in the editor, and if you consider the time needed to write the source code compared to the time to debug and test, these extensions are not really needed, and may, since they make explicit things implicit, decrease the readability of the code.</p>
+<p>So when you only consider the language extensions, Sun missed the chance to have a real step forward and make a modern and cutting edge language. Instead of introducing innovating language feature like delegation, run time generics, subtypes and similar features, they painted some stripes on their cat to pretend it is a tiger. Missed the courage?</p>

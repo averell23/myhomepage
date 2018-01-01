@@ -1,0 +1,45 @@
+---
+layout: post
+title: Fail gently
+date: 2005-04-14 11:36:07.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Debugging
+- Engineering
+tags: []
+meta:
+  _publicize_pending: '1'
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>
+A recent blog entry by Psycho brought an article about "fail fast" to my attention. The article is sponsored by Martin Fowler (i.e. the King of Refactoring (tm)). The author is a consultant who "helps software teams work more efficiently". (Did you ever notice that consultants always seem to have this kind of standard tag line?)</p>
+<p>
+In any case, the article introduces the concept of "failing fast". The idea is that a developer should get alerted to error conditions as soon as possible.</p>
+<p><!--more--></p>
+<p>
+At the bottom line, it all boils down to "thou shalst use assertions in thy code".</p>
+<p>
+Now, using assertions is generally a bright idea, although it's not particularly novel. The term "failing fast" implies something different, however. And what it implies is not always such a good idea, especially when developing applications for end users:</p>
+<ul>
+<li>Assertions are not error conditions. They are assumptions about your code. If used correctly, they will quickly highlight logical errors - as the "fail fast" approach suggests. However, they are neither part of the program logic, nor are they messages for the end user.</li>
+<li>There is no need for Assertions to throw Exceptions. In most cases, it is wiser to stick with the system's pre-defined assertion method. I know that exceptions are super-duper cool and whatnot. However, they break the control flow and using them does mix error handling and bug hunting. Bottom line: Even if you think you must have your own Assert class, make them use the predefined assertion routines.</li>
+<li>Your end users don't want your application to fail fast. They want it to fail gently, in the way that causes least harm. They are probably not interested in emailing you obscure error messages and they may not like you burning their processor cycles for exception checks. And your customer's happiness is much more important than the ease of debugging. That is why you should keep assertions and error handling separate: You can be aggressive about the assertions (which gives you the best of the "fail fast" approach), and be gentle in your error handling (which keeps your customers happy). This is also the reason why you should disable the assertions in your production code: These messages are just for you (and your testing department).</li>
+</ul>
+<p>
+Another thing that comes up is the "endless debugger debate". In this case: "You'll hardly ever use your debugger because you get a stack trace". In reality, the number one reason for not using a debugger is having a shitty debugger. For example, the first debugger I had for Java looked very nice but took forever to start up. After which it crashed. Of course I didn't use it.</p>
+<p>
+On the other hand if I have a good debugger that Just Works (tm), I'll start my code in the debugger all the time.</p>
+<p>
+But when it comes to assertions, a good debugging environment will actually help you a lot. When you get the option to just break into the code upon an assertion, you'll get the complete stack trace and context information right there, without having to pass anything around.</p>

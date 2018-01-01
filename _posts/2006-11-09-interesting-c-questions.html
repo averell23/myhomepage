@@ -1,0 +1,57 @@
+---
+layout: post
+title: Interesting C++ Questions
+date: 2006-11-09 12:40:21.000000000 +01:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Engineering
+- Tricks
+tags:
+- cpp
+- hack
+- quiz
+meta:
+  _publicize_pending: '1'
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>Actually, this one is a little quiz for you. I don't exactly know all the answers, but may you do ;-) These are some questions that highlight the differences between those garbage-collected languages where almost everything is a pointer-like reference, and the gritty world of C++.<br />
+Assume you have a very simple C++ class like</p>
+<blockquote><p>class MyPoint</p>
+<p>{</p>
+<p>double x;</p>
+<p>double y;</p>
+<p>MyPoint(const CMyPoint&amp; point) { ... }</p>
+<p>MyPoint&amp; operator  = (const MyPoint&amp; param) { ... }</p>
+<p>}</p></blockquote>
+<p><!--more--></p>
+<p>and now you write a method that returns such a beast:</p>
+<blockquote><p>MyPoint MakeSomePoint()</p>
+<p>{</p>
+<p>MyPoint NewPoint;</p>
+<p>...</p>
+<p>return NewPoint;</p>
+<p>}</p></blockquote>
+<p>Now you can call this method from somewhere else:</p>
+<blockquote><p>...</p>
+<p>MyPoint foobar = MakeSomePoint();</p>
+<p>...</p></blockquote>
+<p>Interestingly enough, this kind of stuff really works. The assignment in the caller is still somewhat straightforward: A new object is created on the stack and the copy constructor is called with the result  of <strong>MakeSomePoint()</strong>. But the method creates the object on it's local stack, so why is it apparently still valid? Or is this only by accident?<br />
+Further questions:</p>
+<ul>
+<li>What kind of thing does the <strong>MakeSomePoint()</strong> method return? Is it the exact same object that was created in the method body? Or a copy thereof? Or something else? And how's an object type passed (In contrast to pointers or references)?</li>
+<li>What would be different if the method returned a reference instead?</li>
+<li>At which point are the objects from <strong>MakeSomePoint()</strong>'s stack deleted?</li>
+</ul>
+<p>Happy hunting!</p>

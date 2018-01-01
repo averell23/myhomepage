@@ -1,0 +1,44 @@
+---
+layout: post
+title: Modern seers
+date: 2005-04-14 11:35:08.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Engineering
+- Philosophy
+- Process
+tags: []
+meta:
+  _publicize_pending: '1'
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>
+Using common base classes is one of the most valuable things that object oriented programming contributes to modern software development. Whenever you share a common base class within two implementations, it saves you from developing the same code twice and speeds up your development. It keeps your program code small and helps to reduce maintainance effords.</p>
+<p>
+So you may come to the conclusion that it might be a good idea to split up the solution for your current problem into a generic base class and a specific class, which inherits from this generic base class. And cause you are a real cool programmer, you write the generic class so that it not only solves your current problem, but a superset of it, so that others can use it to solve their problems too.</p>
+<p><!--more--></p>
+<p>
+To cut a long story short: resist the seduction to be a seer, anticipating future generality. You will fail.</p>
+<p>
+When you extract base classes from an implementation, you have to decide where to cut the generic parts from the specific ones. The problem is: where do you cut, if you do not know all future applications yet? If the generic part you extract is too small, you will get something like a "trivial" class, which provides no valuable functionality at all. If the base class includes too much things special for your problem, then nobody can reuse it. Since you do not know for which problems future users will use your base class, you will never find the golden section.</p>
+<p>You can work around this problem dividing your generic part in a fine granulated class hirarchy. So every user can decide on its own, which parts of your implementation to reuse. Following this motto, you will create a huge set of classes, each class implementing a very special functionality. Each of these classes will only have two or three methods, less then 10 lines each. You will waste most of the code to delegate functionality to other classes of your hirarchy. Since you want to give each class a "speaking" name, which distinguishs its functionality from the other classes, the name of the class will spread of several lines of your 24 inch TFT. An if someone ever would think of using one of your generic classes, the pure amount of class names and the complexity of the hirarchy will discourage him to do so.</p>
+<p>
+Even if you manage to convince someone to use your <a href="http://dict.leo.org/?search=eierlegende+wollmilchsau&amp;searchLoc=0&amp;relink=on&amp;spellToler=std&amp;sectHdr=on&amp;tableBorder=1&amp;cmpType=relaxed&amp;lang=de">"eierlegende Wollmilchsau"</a>, you will notice that most of the things you assumed to be generic are in fact only usable in your very special context, and that the solution you developed is not suitable for the others problem for some reason, cause you focused too much on your original problem. Then you have the choice to add this special case in the generic implementation, or the specific class overrides all methods not suitable for its needs. In the first case, you will end up with a base class, which is only a big switch for all the special cases you forgot; if you decided to implement the second solution, the specific class will use nearly nothing of the generic classes and would be better without all the unnecessary stuff it needs to match the scheme of the generic class.</p>
+<p>
+Instead of anticipating all future applications of generic classes, create a simple solution which solves your current problem in a structured way. If you find some day, that some parts of it also fit for other problems, refactor your classes, extracting the common parts. At this point in time, you know the requirements on the base classes and you can find the rigth amount of generality easily.</p>
+<p>
+Don't get me wrong: If you know in advance that you have to implement several similar functionalities, you should have a design, which extracts generic functionality to common base classes.</p>
+<p>
+But anticipatory generality is nothing else then predicting the future from the bowel of a fish.</p>

@@ -1,0 +1,41 @@
+---
+layout: post
+title: Put your rdoc on github, monitor your sever
+date: 2009-07-20 20:02:16.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Engineering
+tags:
+- documentatio
+- github
+- gokdok
+- monitoring
+- ruby
+- tool
+- watchdogger
+meta:
+  _publicize_pending: '1'
+  _edit_last: '7360710'
+  image_value: "/wp-content/files/gokdok.png"
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>Last week I needed a quick way to monitor our server, and also updated our code documentation. I've come up with some small tools that some people out there may find useful:</p>
+<ul>
+<li><a href="http://github.com/averell23/gokdok">gokdok</a> - automatically upload your rdoc documentation as <a href="http://github.com/blog/272-github-pages">github-pages</a></li>
+<li><a href="http://wiki.github.com/averell23/watchdogger">watchdogger</a> - a little watchdog daemon that's quite configurable</li>
+</ul>
+<p><!--more--></p>
+<p>The gokdok thing addresses fact that github offers you a space for project pages, but in no way helps you to build your documentation or upload it. It's just a small rake task, but it works fine for me (and we finally have fresh rdocs online again...)</p>
+<p>The watchdog was made to monitor our instance of Tomcat. At the moment it does exactly what I need it to do, which is monitoring some web pages and the log file and killing the server process in case of trouble. It should be very easy to extend. </p>

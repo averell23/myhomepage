@@ -1,0 +1,41 @@
+---
+layout: post
+title: A little routing trickery
+date: 2008-04-09 16:01:33.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Note to self
+- ruby
+- Tricks
+tags:
+- hack
+- rails
+- routes
+meta:
+  _publicize_pending: '1'
+  _edit_last: '7360710'
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>Documentation in Rails seems notoriously bad - the documentation appears to be painfully incomplete. Anyway, all the cool kiddies will tell you how to do resource routing; but I wanted a bit more. In particular, i wanted to have URLs that work like <tt>http://xxx/things//</tt>. Where  is the id of the thing you're watching, and  is an additonal identifier that is passed to the controller. For example, you could have a rout that let's you do <tt>http://xxx/cars/bug/green</tt>, to show you the green version of the bug.</p>
+<p>After a little trial and error, I found that this will be possible using a route like this:</p>
+<blockquote>
+<pre><code>
+map.resources :cars do |cars|
+  cars.connect ':colour', :controller =&gt; 'cars',
+    :action =&gt; 'car_with_colour'
+end
+</code></pre>
+</blockquote>
+<p>Which defines this in a much nicer fashion than matching the route "manually".</p>

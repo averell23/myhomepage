@@ -1,0 +1,36 @@
+---
+layout: post
+title: Debugger messes up rdoc
+date: 2008-02-29 13:26:28.000000000 +01:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Debugging
+- Engineering
+- Note to self
+tags:
+- debugger
+- hack
+- rdoc
+meta:
+  _publicize_pending: '1'
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>Sometimes it seems that ruby still has a way to go in terms of maturity. Today I got a strange error message when trying to build the rdoc files:</p>
+<blockquote><p>
+<code><br />
+uninitialized constant RubyToken::AlreadyDefinedToken (NameError)<br />
+</code>
+</p></blockquote>
+<p>Any idea what it means? It turns out that I forgot to remove a <tt>require 'ruby-debug'</tt> somewhere in the code, which in turn includes some files from irb, which in turn is <a href="http://www.ruby-forum.com/topic/141941">incompatible with rdoc</a>. Duh...</p>

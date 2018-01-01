@@ -1,0 +1,40 @@
+---
+layout: post
+title: Subclass this
+date: 2010-05-21 12:35:25.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Architecture
+- Design
+- Engineering
+- Philosophy
+tags: []
+meta:
+  _publicize_pending: '1'
+  _edit_last: '7360710'
+  image_value: "/wp-content/files/roots.jpg"
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>In object-oriented languages there's a nifty feature called code inheritance. People tend to think that this is a really cool (tm) thing, since it allows you to quickly slab some new features onto a class whenever the need arises. In fact, there still seems to be a lot of folks who think that the whole point of object-orientation is to subclass a lot.</p>
+<p>I've previously worked with Microsoft MFC, which was designed that way (but remember, that was back 1992) - as was the class hierarchy that makes your Unreal Tournament tick. I've seen object hierarchies spreading over 15 levels, and more.</p>
+<p>The only problem with code written that way is that it sucks. A lot. </p>
+<p><!--more--></p>
+<p>The point is that while subclassing makes it easy to re-use code in multiple places, but it isn't very modular. One of my first jobs involved moving one class from a branch in a convoluted inheritance tree to another branch. This meant changing some of the superclasses and - you guess it - it exploded in all the wrong places. Speak about pain.</p>
+<p>The problem with subclassing is that each subclass depends on all its superclasses. You can't take the code out and re-use it elsewhere, especially since most sane languages don't allow true multiple inheritance. The larger your subclass tree grows, the bigger the dependencies grow and the less flexible it gets. Stuff from the lower rungs of the hierarchy cannot be re-used in any useful way, and the whole hierarchy may not fit easily into other projects either.</p>
+<p>So, if you want to be extra nice to your fellow developers, including your future self, try building your application out of simple, independent blocks. The architecture astronauts have made up lots of names for that, but the concept is actually refreshingly simple.</p>
+<p>What you can do depends on which environment you're in: In Java (and Java-like languages, say, C#) you can make small components and tie them together using <a href="http://java.sun.com/docs/books/tutorial/java/concepts/interface.html">Interfaces</a>, which describe how you can interact with an object. Which allows you to replace one component for another that uses the same interface.</p>
+<p>In Ruby, you don't need the interfaces since the communication between objects is pretty much free-form already. However, you get a nifty feature called "<a href="http://juixe.com/techknow/index.php/2006/06/15/mixins-in-ruby/">Mixin</a>", which allows you to write some methods in one place and then re-use same code in different places.</p>
+<p>In any case, watch out that you keep things simple, stupid. And remember that sometimes plain old inheritance may be the simplest thing.</p>
+<p>Photo: <a href="http://www.flickr.com/photos/mendhak/3666488194/">flickr/mendhak</a> licensed under <a href="http://creativecommons.org/licenses/by-sa/2.0/deed.de">Creative Commons</a></p>

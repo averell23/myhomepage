@@ -1,0 +1,34 @@
+---
+layout: post
+title: Checking rails routes
+date: 2008-05-15 12:06:33.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Debugging
+- Note to self
+- ruby
+tags:
+- rails
+- routes
+meta:
+  _publicize_pending: '1'
+  _edit_last: '7360710'
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>I just had to debug a strange problem with the Routing in JRuby. So in case you need to test the routing mechanism "by hand" go</p>
+<pre><code>
+&gt; jruby script/console
+&gt;&gt; ActionController::Routing::Routes.recognize_path('/my/path', {:method =&gt; :get})
+</code></pre>

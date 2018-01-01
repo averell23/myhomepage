@@ -1,0 +1,59 @@
+---
+layout: post
+title: Linked lists are obsolete
+date: 2005-04-14 11:35:43.000000000 +02:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Engineering
+- Tricks
+tags: []
+meta:
+  _publicize_pending: '1'
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>
+Linked lists have been an integral part of programmers work. Now its time to annihilate this prehistoric data structure.</p>
+<p>
+Since early C days, you find linked list implementations in nearly every source file, most likely in its simplest form: A data structure with a 'next' pointer, refering to the node of the list, beeing such a data structure again.</p>
+<p>
+Then came object-orientation, and every class library provided at least one generic class for linked list, to the programmers don't need to implement a linked list themselves again. Brave new world. But, surprise, surprise - nobody used them.</p>
+<p>
+What the hell happened? Where had this most important of all data structures gone?</p>
+<p>
+Let's think about the reasons to use a linked list:</p>
+<ul>
+<li>Linked lists are quite simple to program. </li>
+<li>Insertion in a linked list is cheap: You can insert an element in O(1)</li>
+<li>Concatenation of linked lists is cheap: You can put together two linked lists in O(1) (assumed that you have a double linked list), by setting the next-pointer of the last element of the first list to the head of the second list.</li>
+</ul>
+<p>
+Good reasons, it seems. So why, why, why....?</p>
+<p>
+It's simple to explain: Compare this advantages with other data structures, let's say a self growing array:</p>
+<ul>
+<li>Every library provides such an array</li>
+<li>Consecutive insertion in an self growing array is cheap: You can insert an element in O(2) - but you don't need to get new memory with "new" every time you insert an element</li>
+<li>The concatenation of two lists is expensive, each element must be copied, so this is O(n).</li>
+</ul>
+<p>
+So the advantage seems to be the concatenation of two lists. Isn't this sufficient to justify the existance of a generic linked list class in class library?</p>
+<p>
+Let's have a look at such a concatenation operation in O(1):</p>
+<p>
+Assume you have two lists, <em>l1</em> and <em>l2</em>. A new list is created by the concatenation of <em>l1</em> and <em>l2</em>, let's call this list <em>l3</em>. If you create <em>l3</em> the way described above, you will face a problem: The elements (nodes) in <em>l1</em> and <em>l2</em>&nbsp; are now as well in <em>l3</em>. But each node has only one next pointer. If you now change l3, you will as well change <em>l1</em> or <em>l2</em>. Since you have a <strong><em>generic</em></strong> linked list class, this is not desired behaviour. So you must create <em>l3</em> by copying the elments from<em> l1 </em>and <em>l3</em> to new nodes. This means, that you now do this operation in O(n).</p>
+<p>
+So now the last advantage of a linked list compared to an array has gone. Of course, there are a lot of cases, where the two operants of the concatenation are no longer used, and therefore, copying is not necessary. But - it should be a <strong><em>generic </em></strong>implementation, eh? And to be honest: How often do you need a concatenation operation?<em><strong></strong></em></p>
+<p>
+In short words: Nobody needs a generic linked list class, that has no advantages. You instead use an array - where you can access the entries simply by the index of the array in O(1).</p>

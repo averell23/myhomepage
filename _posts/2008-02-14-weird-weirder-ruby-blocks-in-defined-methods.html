@@ -1,0 +1,67 @@
+---
+layout: post
+title: Weird, weirder, ruby blocks in defined methods
+date: 2008-02-14 18:22:45.000000000 +01:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Engineering
+- ruby
+- Tricks
+tags:
+- blocks
+- closures
+- hack
+- metaprogramming
+meta:
+  _publicize_pending: '1'
+  restapi_import_id: 587f174b1570c
+  original_post_id: '160'
+  _wp_old_slug: '160'
+author:
+  login: averell23
+  email: ghub@limitedcreativity.org
+  display_name: averell23
+  first_name: ''
+  last_name: ''
+---
+<p>All right. I give up. I have no idea, but maybe one of the hardcore coders has. I have been trying this to write an extension to ActiveRecord, so that I can have an active Record that has an <tt>uri</tt> field (it should transparently return URI objects when queried. So I did this:</p>
+<p><!--more--></p>
+<blockquote>
+<pre>
+<code>
+module ActiveRecord
+  class Base
+    
+    # Adds the uri getter an setter to the current
+    # class
+    def self.has_uri_field(uri_type)
+      
+      # Initializer takes the uri field
+      define_method("initialize") do |uri|
+        super(nil) # &lt;--- NOTE THIS!
+        write_attribute(:uri, uri.to_s)
+      end
+
+      ...
+</code>
+</pre>
+</blockquote>
+<p>Later on, I use this to create a new ActiveRecord class with</p>
+<blockquote>
+<pre><code>
+class SourceRecord &lt; ActiveRecord::Base
+  has_uri_field MyUriClass
+</code></pre>
+</blockquote>
+<p>In the new class, the "initialize" method is dynamically overwritten with the method from the first code snippet. And now for the weirdness: I got to a point where I called
+<pre>SourceRecord.new("uristring")</pre>
+<p> and the new initializer gets executed. In turn, it  calls <tt>super</tt>, the <tt>ActiveRecord::Base</tt> initializer. Which, in turn, contains the following pice of code:</p>
+<pre>result = yield self if block_given?</pre>
+<p>The thing is that <tt>block_given?</tt> returns true and calls the <tt>Rails::Initializer.run</tt> block from environment.rb, passing an ActiveRecord as the config. Of course it fails miserably. </p>
+<p>I have no idea where this block comes from. Inside the dynamically defined method it's not existent (methods created with define_method don't take blocks in 1.8). The stack trace is inconclusive. Of course the debugger fails to go there. At the moment I can work around with</p>
+<pre>super(nil) { nil }</pre>
+<p>which passes a useless block (which seems to work right), but the mystery remains.</p>
