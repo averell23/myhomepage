@@ -5,7 +5,7 @@ description: >
   This is a hub to finding my stuff. While my presence is all over the net,
   I still keep my own page as a starting point.
 baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://www.danielhahn.io" # the base hostname & protocol for your site
+url: "https://www.danielhahn.io" # the base hostname & protocol for your site
 
 social_link: twitter
 social_username: averell23
