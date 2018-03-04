@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Weird, weirder, ruby blocks in defined methods
 date: 2008-02-14 18:22:45.000000000 +01:00
 type: post
@@ -35,11 +34,11 @@ author:
 <code>
 module ActiveRecord
   class Base
-    
+
     # Adds the uri getter an setter to the current
     # class
     def self.has_uri_field(uri_type)
-      
+
       # Initializer takes the uri field
       define_method("initialize") do |uri|
         super(nil) # &lt;--- NOTE THIS!

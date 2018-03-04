@@ -16,3 +16,11 @@ theme_color: red
 
 # Build settings
 markdown: kramdown
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single

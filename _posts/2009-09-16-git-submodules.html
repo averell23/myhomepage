@@ -1,5 +1,4 @@
 ---
-layout: post
 title: git submodules
 date: 2009-09-16 10:53:44.000000000 +02:00
 type: post
@@ -34,7 +33,7 @@ author:
 <p><!--more--></p>
 <p>Adding another git repository as a submodule couldn't be more easy:</p>
 <pre><code>
-git submodule add  
+git submodule add
 </code></pre>
 <p>This will clone the "other_repo" and put it at the given path. The first thing to note is, that this is a completely independent repository. It will <strong>not</strong> be pushed, pulled or commited automatically when the "parent" repository is modified. </p>
 <p>Unlike a svn external, the submodule is a "pointer" to a specific revision instead of a URL. This means that, even if development on the submodule repository continues, your project will always use the <em>exact same version of</em> that module until you change that version.</p>
@@ -59,7 +58,7 @@ cd submodule
 git checkout XYZ
 # or hack, push, whathever ;-)
 cd ..
-git commit 
+git commit
 # -&gt; ./submodule now to points to revision XYZ
 # Once you push, all other users will get XYZ when they
 # do a "git submodule update"
