@@ -113,19 +113,7 @@
 
         <!-- Embed Twitter timeline -->
         <div class="py-2 mb-2 prose">
-          <h2 class="h1 lh-condensed col-9 mt-0">
-            <a class="link-primary" title="Tweets by averell23" href="https://twitter.com/averell23">
-              Tweets by averell23
-            </a>
-          </h2>
-          <a class="twitter-timeline"
-              data-tweet-limit="3"
-              data-dnt="true"
-              data-link-color="#E81C4F"
-              data-chrome="noheader transparent noborders"
-              href="https://twitter.com/averell23?ref_src=twsrc%5Etfw">Tweets by averell23
-          </a>
-          <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+          {% include twitter-timeline.html %}
         </div>
       </div>
 
