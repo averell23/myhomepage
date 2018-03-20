@@ -17,6 +17,7 @@ author:
   first_name: ''
   last_name: ''
 location: Johannisstraße 20, 10117 Berlin
+location_url: http://www.houseofsmallwonder.de
 ---
 Zu beliebt für diese Stadt:
 Das [**House of Small Wonder**](http://www.houseofsmallwonder.de) ist schon seit
