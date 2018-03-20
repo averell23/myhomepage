@@ -40,5 +40,5 @@ eine interessante Karte und (noch) nicht überlaufen.
 {% include google-maps.html %}
 
 **Im gleichen Gebäude**: [**Zenkichi**](http://www.zenkichi.de) - japanisches
-Restaurant mit spannender Innenausstattung. Tasting Menü ist okay, wenn auch
-etwas teuer. Das Sake-Pairing dazu exzellent.
+Restaurant vom gleichen Inhaber, mit spannender Innenausstattung.
+Tasting Menü ist okay, wenn auch etwas teuer. Das Sake-Pairing dazu exzellent.
