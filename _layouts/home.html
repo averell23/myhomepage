@@ -14,7 +14,7 @@
             {% for my_page in site.pages %}
               {% if my_page.title %}
               <li class="inline-block">
-                <a class="align-middle link-primary header-link mr-2" href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.title }}</a>
+                <a class="align-middle link-primary header-link mr-2 h-card" rel="me" href="{{ my_page.url | prepend: site.baseurl }}" >{{ my_page.title }}</a>
               </li>
               {% endif %}
             {% endfor %}
@@ -62,7 +62,8 @@
           </h2>
           <p>
             As most of the time I don't have time to write longer texts, the
-            "blog" portion of this page will rarely be updated.
+            "blog" portion of this page will rarely be updated; and if it
+            is the content will be mirrored on Medium as well.
           </p>
           <h3>Professional Stuff</h3>
           <ul>
