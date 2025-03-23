@@ -2,8 +2,8 @@
 title: Daniel Hahn
 email:
 description: >
-  This is a hub to finding my stuff. While my presence is all over the net,
-  I still keep my own page as a starting point.
+  This is the hub for my stuff (and federated elsewhere). Everything else is
+  just a repost.
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "https://www.danielhahn.io" # the base hostname & protocol for your site
 
