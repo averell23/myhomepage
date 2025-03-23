@@ -16,7 +16,7 @@
   <meta property="og:site_name" content="{{ site.title | escape }}" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="{{page.url | prepend: full_base_url }}" />
-  <meta property="og:image" content="{{ '/assets/giraffe.jpg' | prepend: full_base_url }} />
+  <meta property="og:image" content="{{ '/assets/giraffe.jpg' | prepend: full_base_url }}" />
 
   <title>{{ page_title }}</title>
   <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
