@@ -9,21 +9,17 @@ url: "https://www.danielhahn.io" # the base hostname & protocol for your site
 
 permalink: /:year/:month/:day/:title/
 
-social_link: twitter
-social_username: averell23
+social_link: github
 github_username: averell23
 
 theme: jekyll-swiss
 theme_color: red
-google_analytics: UA-114647456-1
 
 # Build settings
 markdown: kramdown
 
 author:
   name: "Daniel Hahn"
-  twitter: averell23
-
 
 defaults:
   - scope:

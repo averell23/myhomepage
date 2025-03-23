@@ -37,8 +37,6 @@ gut, aber nicht umwerfend; und für Berlin eher auf der teuren Seite.
 **Alternative**: _Qua Phe_, Max-Beer-Straße 37. Vietnamesischer Kaffee, auch
 eine interessante Karte und (noch) nicht überlaufen.
 
-{% include google-maps.html %}
-
 **Im gleichen Gebäude**: [**Zenkichi**](http://www.zenkichi.de) - japanisches
 Restaurant vom gleichen Inhaber, mit spannender Innenausstattung.
 Tasting Menü ist okay, wenn auch etwas teuer. Das Sake-Pairing dazu exzellent.

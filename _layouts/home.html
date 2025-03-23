@@ -62,32 +62,25 @@
           </h2>
           <p>
             As most of the time I don't have time to write longer texts, the
-            "blog" portion of this page will rarely be updated; and if it
-            is the content will be mirrored on Medium as well.
+            "blog" portion of this page will rarely be updated.
           </p>
           <h3>Professional Stuff</h3>
           <ul>
             <li>
-              <a href="https://www.linkedin.com/in/daniel-hahn-2b636215" class="text-accent">LinkedIn</a>
+              <a href="https://www.linkedin.com/in/daniel-hahn-2b636215" class="text-accent" rel="me">LinkedIn</a>
               and
-              <a href="https://www.xing.com/profile/Daniel_Hahn8" class="text-accent">Xing</a>
+              <a href="https://www.xing.com/profile/Daniel_Hahn8" class="text-accent" rel="me">Xing</a>
               have all you need to know about my professional experience.
             </li>
             <li>
-              <a href="https://github.com/averell23/" class="text-accent">
+              <a href="https://github.com/averell23/" class="text-accent" rel="me">
               My github profile</a> shows which projects I have worked on.
             </li>
           </ul>
           <h3>Written Stuff</h3>
           <ul>
             <li>
-              Short musings will be on
-              <a href="https://twitter.com/averell23" class="text-accent">Twitter</a>,
-              Google Plus and such will receive a copy.
-            </li>
-            <li>
-              Longer texts will still be published here, and be available on
-              Medium as well.
+              Longer texts will still be published here.
             </li>
             <li>
               You will still find all my old writings here, minus the crossposts
@@ -101,7 +94,7 @@
               profile</a> will have the pictures of the day.
             </li>
             <li>
-              My <a href="http://photography.danielhahn.i o" class="text-accent">photography site</a> has of
+              My <a href="http://photography.danielhahn.io" class="text-accent">photography site</a> has of
               my images, on various topics.
             </li>
           </ul>
@@ -110,13 +103,6 @@
         {% for post in site.posts limit: 3 %}
           {% include post_block.html %}
         {% endfor %}
-
-        <!-- Embed Twitter timeline -->
-        <div class="py-2 mb-2 prose">
-          {% include twitter-timeline.html %}
-        </div>
-      </div>
-
     </div>
 
     {% include footer.html %}
